@@ -34,6 +34,15 @@ Aplikasi ini memiliki 3 halaman utama (Sistem Navigasi Multi-Halaman):
 ## Struktur Direktori
 
 ```bash
+Data Analyst/                        # Folder untuk visualisasi & presentasi
+├── Plot_1.jpeg                      # Plot distribusi kategori jurusan
+├── Plot_2.jpeg                      # Plot rata-rata nilai per kategori
+├── Plot_3.jpeg                      # Plot box plot sebaran nilai
+├── Plot_4.jpeg                      # Plot heatmap korelasi nilai
+├── Plot_5.jpeg                      # Plot jurusan paling diminati
+├── Streamlit.jpeg                   # Screenshot aplikasi Streamlit
+└── YourMajor_Presentation.pdf       # Slide presentasi final
+
 Data Engineer/              # Folder untuk pipeline ETL & data mentah
 ├── data-raw/               # Data mentah dari PostgreSQL
 ├── .env                    # Environment variables (koneksi DB, dll)
