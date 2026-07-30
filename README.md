@@ -56,4 +56,20 @@ Data Engineer/              # Folder untuk pipeline ETL & data mentah
 Data Science/               # Folder untuk modeling & rekomendasi
 ├── model_your_major.ipynb  # Notebook training KNN
 └── your_major_recomendation_pipeline.pkl  # Artefak model (Scaler + KNN + Data)
+
+Deployment/                          # Folder untuk deploy aplikasi Streamlit
+├── WEARE003.jpeg                    # Logo/icon app
+├── app.py                           # Router utama Streamlit
+├── avg_nilai_nilai.jpeg             # Plot rata-rata nilai per kategori
+├── box_plot.jpeg                    # Plot box plot sebaran nilai
+├── data_nilai_peserta.csv           # Dataset final untuk training
+├── eda.py                           # Halaman Exploratory Data Analysis
+├── gambar_kampus.jpeg               # Banner halaman Home
+├── heatmap_kategori.jpeg            # Plot heatmap korelasi nilai
+├── kategori_jurusan.jpeg            # Plot distribusi kategori jurusan
+├── logo_removebg.png                # Logo utama aplikasi
+├── minat_terbanyak.jpeg             # Plot jurusan paling diminati
+├── prediction.py                    # Halaman Prediksi & Rekomendasi
+├── requirements.txt                 # Library dependencies
+└── your_major_recomendation_pipeline.pkl  # Artefak model (Scaler + KNN + Data)
 ```
