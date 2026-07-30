@@ -34,10 +34,17 @@ Aplikasi ini memiliki 3 halaman utama (Sistem Navigasi Multi-Halaman):
 ## Struktur Direktori
 
 ```bash
-├── app.py                      # Router utama Streamlit (Sidebar navigation)
-├── eda.py                      # Halaman Exploratory Data Analysis
-├── prediction.py               # Halaman input model & output rekomendasi
-├── requirements.txt            # Daftar library (Streamlit, Pandas, Scikit-Learn, dll)
-├── your_major_recomendation_pipeline.pkl  # Artefak model ML (Scaler + KNN + Data)
-└── /assets                     # Direktori penyimpanan gambar/plot untuk EDA
+Data Engineer/              # Folder untuk pipeline ETL & data mentah
+├── data-raw/               # Data mentah dari PostgreSQL
+├── .env                    # Environment variables (koneksi DB, dll)
+├── airflow.yaml            # Docker Compose untuk Airflow
+├── data_merge.csv          # Hasil extract dari PostgreSQL (mentah)
+├── data_merge_clean.csv    # Data setelah proses cleaning
+├── data_nilai_peserta.csv  # Dataset final siap pakai
+├── ddl.txt                 # Script DDL untuk VIEW di pgAdmin
+└── etl_utbk_pipeline.py    # DAG Airflow (extract >> clean >> load)
+
+Data Science/               # Folder untuk modeling & rekomendasi
+├── model_your_major.ipynb  # Notebook training KNN
+└── your_major_recomendation_pipeline.pkl  # Artefak model (Scaler + KNN + Data)
 ```
