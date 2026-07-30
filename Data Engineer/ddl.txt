@@ -1,0 +1,92 @@
+-- DDL & DML 
+
+-- pembuatan database
+CREATE DATABASE utbk_data;
+
+-- pembuatan table
+
+-- Table: majors
+DROP TABLE IF EXISTS majors CASCADE;
+CREATE TABLE majors (
+    idx INTEGER,
+    id_major INTEGER PRIMARY KEY,
+    id_university INTEGER,
+    type VARCHAR(50),
+    major_name VARCHAR(255),
+    capacity INTEGER
+);
+
+-- Table: universities
+DROP TABLE IF EXISTS universities CASCADE;
+CREATE TABLE universities (
+    idx INTEGER,
+    id_university INTEGER PRIMARY KEY,
+    university_name VARCHAR(255)
+);
+
+-- Table: scores_science
+DROP TABLE IF EXISTS scores_science CASCADE;
+CREATE TABLE scores_science (
+    idx INTEGER,
+    id_first_major INTEGER,
+    id_first_university INTEGER,
+    id_second_major INTEGER,
+    id_second_university INTEGER,
+    id_user INTEGER PRIMARY KEY,
+    score_bio INTEGER,
+    score_fis INTEGER,
+    score_kim INTEGER,
+    score_kmb INTEGER,
+    score_kpu INTEGER,
+    score_kua INTEGER,
+    score_mat INTEGER,
+    score_ppu INTEGER
+);
+
+-- melakukan insert data ke database
+
+COPY majors (idx, id_major, id_university, type, major_name, capacity)
+FROM '/var/lib/postgresql/data/majors.csv'
+WITH (FORMAT csv, HEADER true, ENCODING 'UTF-8');
+
+COPY universities (idx, id_university, university_name)
+FROM '/var/lib/postgresql/data/universities.csv'
+WITH (FORMAT csv, HEADER true, ENCODING 'UTF-8');
+
+COPY scores_science (idx, id_first_major, id_first_university,
+    id_second_major, id_second_university, id_user,
+    score_bio, score_fis, score_kim, score_kmb,
+    score_kpu, score_kua, score_mat, score_ppu)
+FROM '/var/lib/postgresql/data/score_science.csv'
+WITH (FORMAT csv, HEADER true, ENCODING 'UTF-8');
+
+-- Verify jumlah data setelah import
+
+SELECT 'majors' AS table_name, COUNT(*) AS rows FROM majors
+UNION ALL
+SELECT 'universities', COUNT(*) FROM universities
+UNION ALL
+SELECT 'scores_science', COUNT(*) FROM scores_science;
+
+-- MERGE TABLES: Membuat Tabel Baru Permanen
+
+DROP TABLE IF EXISTS scores_science_merged;
+CREATE TABLE scores_science_merged AS
+SELECT
+    s.id_user,
+    s.score_bio,
+    s.score_fis,
+    s.score_kim,
+    s.score_mat,
+    s.score_kmb,
+    s.score_kpu,
+    s.score_kua,
+    s.score_ppu,
+    m1.major_name,
+    u1.university_name
+FROM scores_science s
+LEFT JOIN majors m1       ON s.id_first_major      = m1.id_major
+LEFT JOIN universities u1 ON s.id_first_university  = u1.id_university;
+
+-- Cek data di tabel baru
+SELECT * FROM scores_science_merged;
