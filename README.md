@@ -2,11 +2,6 @@
 
 Aplikasi berbasis web untuk membantu calon mahasiswa menemukan jurusan dan universitas yang paling relevan berdasarkan simulasi profil nilai UTBK (Saintek) mereka. Proyek ini dibangun menggunakan **K-Nearest Neighbors (KNN)** dan di-*deploy* menggunakan **Streamlit**.
 
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Scikit-Learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
-![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
-
 ---
 
 ## Latar Belakang
@@ -17,6 +12,13 @@ Model ini dilatih menggunakan dataset **UTBK 2019 Domain Saintek (IPA)** dengan 
 * **Jumlah Data:** 86.569 siswa
 * **Fitur Nilai (8 Mata Uji):** Biologi, Fisika, Kimia, Matematika, KMB, KPU, KUA, PPU.
 * **Target:** 279 pilihan Jurusan dan 7 Kategori Bidang (Teknik, Kesehatan, Science, Pendidikan, dll.)
+
+## Flow ETL
+Sebelum data dipakai untuk modeling, ada tahap ETL yang jalan di lokal:
+
+1. **Extract** — data mentah di-query dari PostgreSQL (via pgAdmin) dan disimpan sebagai CSV mentah (`data_merge.csv`). Karena data asli masih terpisah antar tabel, perlu JOIN manual agar ID siswa bisa bersambung ke nama jurusan & universitas.
+2. **Clean** — dibersihin menggunakan Python: rename kolom, standarisasi singkatan seperti `PEND. → PENDIDIKAN`, `TEK. → TEKNOLOGI` memakai `replace_dict`, drop baris NULL yang gagal JOIN, plus mapping tiap jurusan ke 7 kategori bidang utama (Kesehatan, Teknik, Science, dll).
+3. **Load** — hasil bersih disimpan sebagai `data_nilai_peserta.csv` yang siap dipake untuk training model KNN.
 
 ## Fitur Aplikasi
 Aplikasi ini memiliki 3 halaman utama (Sistem Navigasi Multi-Halaman):
@@ -38,3 +40,4 @@ Aplikasi ini memiliki 3 halaman utama (Sistem Navigasi Multi-Halaman):
 ├── requirements.txt            # Daftar library (Streamlit, Pandas, Scikit-Learn, dll)
 ├── your_major_recomendation_pipeline.pkl  # Artefak model ML (Scaler + KNN + Data)
 └── /assets                     # Direktori penyimpanan gambar/plot untuk EDA
+```
